@@ -1,12 +1,41 @@
 import { Label } from '@radix-ui/react-label';
-import { Link } from 'react-router';
+import { data, Form, Link, redirect } from 'react-router';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { cn } from '~/lib/utils';
+import { commitSession, getSession } from '~/sessions.server';
+import type { Route } from './+types/login-page';
+
+export async function loader({ request }: Route.LoaderArgs) {
+  const session = await getSession(request.headers.get('Cookie'));
+
+  if (session.has('userId')) {
+    // Redirect to the home page if they are already signed in.
+    return redirect('/');
+  }
+
+  return data(
+    { error: session.get('error') },
+    {
+      headers: {
+        'Set-Cookie': await commitSession(session)
+      }
+    }
+  );
+}
+
+export async function action({ request }: Route.ActionArgs) {
+  const session = await getSession(request.headers.get('Cookie'));
+  const form = await request.formData();
+}
 
 const LoginPage = () => {
   return (
-    <form className={cn('flex flex-col gap-6')}>
+    <Form
+      method="post"
+      action="/auth/login"
+      className={cn('flex flex-col gap-6')}
+    >
       <div className="flex flex-col items-center gap-2 text-center">
         <h1 className="text-2xl font-bold">Login to your account</h1>
         <p className="text-balance text-sm text-muted-foreground">
@@ -19,6 +48,7 @@ const LoginPage = () => {
           <Input
             id="email"
             type="email"
+            name="email"
             placeholder="your@email.com"
             required
           />
@@ -36,7 +66,9 @@ const LoginPage = () => {
           <Input
             id="password"
             type="password"
+            name="password"
             placeholder="********"
+            minLength={8}
             required
           />
         </div>
@@ -58,7 +90,7 @@ const LoginPage = () => {
           Login with GitHub
         </Button>
       </div>
-    </form>
+    </Form>
   );
 };
 
