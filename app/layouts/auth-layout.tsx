@@ -1,5 +1,6 @@
 import { Outlet } from 'react-router';
-import cclLogo from '~/assets/images/ccl.png';
+import cclIcon from '~/assets/images/ccl.png';
+import cclLogo from '~/assets/images/logoCCL.png';
 
 const AuthLayout = () => {
   return (
@@ -12,7 +13,7 @@ const AuthLayout = () => {
           >
             <div className="flex h-8 w-8 items-center justify-center rounded-md text-primary-foreground">
               <img
-                src={cclLogo}
+                src={cclIcon}
                 alt="CCL Logo"
                 className="size-6 object-contain"
               />
@@ -27,11 +28,14 @@ const AuthLayout = () => {
         </div>
       </div>
       <div className="relative hidden bg-muted lg:block">
-        <img
-          src="/placeholder.svg"
-          alt="Image"
-          className="absolute inset-0 h-full w-full object-cover dark:brightness-[0.2] dark:grayscale"
-        />
+        <div className="absolute inset-0">
+          <img
+            src={cclLogo}
+            alt="CCL Logo"
+            className="h-full w-full object-contain dark:brightness-[0.2] dark:grayscale"
+            loading="lazy"
+          />
+        </div>
       </div>
     </div>
   );
