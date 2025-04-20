@@ -1,5 +1,5 @@
-import { GalleryVerticalEnd } from 'lucide-react';
 import { Outlet } from 'react-router';
+import cclLogo from '~/assets/images/ccl.png';
 
 const AuthLayout = () => {
   return (
@@ -10,8 +10,12 @@ const AuthLayout = () => {
             href="https://codecrafterslabs.com/"
             className="flex items-center gap-2 font-medium"
           >
-            <div className="flex h-6 w-6 items-center justify-center rounded-md bg-primary text-primary-foreground">
-              <GalleryVerticalEnd className="size-4" />
+            <div className="flex h-8 w-8 items-center justify-center rounded-md text-primary-foreground">
+              <img
+                src={cclLogo}
+                alt="CCL Logo"
+                className="size-6 object-contain"
+              />
             </div>
             CodeCrafter Labs
           </a>
