@@ -1,4 +1,5 @@
 import { Label } from '@radix-ui/react-label';
+import { Link } from 'react-router';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { cn } from '~/lib/utils';
@@ -25,12 +26,12 @@ const LoginPage = () => {
         <div className="grid gap-2">
           <div className="flex items-center">
             <Label htmlFor="password">Password</Label>
-            <a
-              href="#"
+            <Link
+              to="/auth/forgot-password"
               className="ml-auto text-sm underline-offset-4 hover:underline"
             >
               Forgot your password?
-            </a>
+            </Link>
           </div>
           <Input
             id="password"
@@ -56,12 +57,6 @@ const LoginPage = () => {
           </svg>
           Login with GitHub
         </Button>
-      </div>
-      <div className="text-center text-sm">
-        Don&apos;t have an account?{' '}
-        <a href="#" className="underline underline-offset-4">
-          Sign up
-        </a>
       </div>
     </form>
   );

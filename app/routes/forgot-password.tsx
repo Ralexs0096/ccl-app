@@ -1,4 +1,5 @@
 import { Label } from '@radix-ui/react-label';
+import { Link } from 'react-router';
 import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 
@@ -26,9 +27,9 @@ const ForgotPassword = () => {
         </Button>
         <div className="text-center text-sm">
           Remember your password?{' '}
-          <a href="/auth/login" className="underline underline-offset-4">
+          <Link to="/auth/login" className="underline underline-offset-4">
             Back to login
-          </a>
+          </Link>
         </div>
       </div>
     </form>
