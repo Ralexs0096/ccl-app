@@ -1,5 +1,6 @@
 import {
   type RouteConfig,
+  index,
   layout,
   prefix,
   route
@@ -11,5 +12,6 @@ export default [
       route('login', 'routes/login-page.tsx'),
       route('forgot-password', 'routes/forgot-password.tsx')
     ])
-  ])
+  ]),
+  ...prefix('/', [index('home-page.tsx')])
 ] satisfies RouteConfig;
