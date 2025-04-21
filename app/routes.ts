@@ -13,5 +13,5 @@ export default [
       route('forgot-password', 'routes/auth/forgot-password.tsx')
     ])
   ]),
-  ...prefix('/', [index('routes/home-page.tsx')])
+  index('routes/home-page.tsx')
 ] satisfies RouteConfig;
