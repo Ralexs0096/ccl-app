@@ -13,5 +13,5 @@ export default [
       route('forgot-password', 'routes/auth/forgot-password.tsx')
     ])
   ]),
-  index('routes/home-page.tsx')
+  layout('layouts/main-layout.tsx', [index('routes/home-page.tsx')])
 ] satisfies RouteConfig;
