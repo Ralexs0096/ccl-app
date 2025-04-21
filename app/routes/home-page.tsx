@@ -1,3 +1,25 @@
+import { data, redirect } from 'react-router';
+import { commitSession, getSession } from '../sessions.server';
+import type { Route } from './+types/home-page';
+
+export async function loader({ request }: Route.LoaderArgs) {
+  const session = await getSession(request.headers.get('Cookie'));
+
+  if (session.has('userId')) {
+    // Redirect to the home page if they are already signed in.
+    return redirect('/');
+  }
+
+  return data(
+    { error: session.get('error') },
+    {
+      headers: {
+        'Set-Cookie': await commitSession(session)
+      }
+    }
+  );
+}
+
 const HomePage = () => {
   return (
     <div className="flex flex-col items-center justify-center min-h-screen p-4">

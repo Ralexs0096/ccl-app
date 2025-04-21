@@ -9,9 +9,9 @@ import {
 export default [
   ...prefix('/auth', [
     layout('layouts/auth-layout.tsx', [
-      route('login', 'routes/login-page.tsx'),
-      route('forgot-password', 'routes/forgot-password.tsx')
+      route('login', 'routes/auth/login-page.tsx'),
+      route('forgot-password', 'routes/auth/forgot-password.tsx')
     ])
   ]),
-  ...prefix('/', [index('home-page.tsx')])
+  ...prefix('/', [index('routes/home-page.tsx')])
 ] satisfies RouteConfig;

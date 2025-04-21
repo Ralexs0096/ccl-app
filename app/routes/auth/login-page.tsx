@@ -4,6 +4,7 @@ import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { cn } from '~/lib/utils';
 import { commitSession, getSession } from '~/sessions.server';
+import { validateCredentials } from '~/utils/auth.server';
 import type { Route } from './+types/login-page';
 
 export async function loader({ request }: Route.LoaderArgs) {
@@ -27,6 +28,22 @@ export async function loader({ request }: Route.LoaderArgs) {
 export async function action({ request }: Route.ActionArgs) {
   const session = await getSession(request.headers.get('Cookie'));
   const form = await request.formData();
+
+  const user = await validateCredentials({
+    email: form.get('email') as string,
+    password: form.get('password') as string
+  });
+
+  if (!user) {
+    session.flash('error', 'Invalid username/password');
+    return redirect('/auth/login', {
+      headers: {
+        'Set-Cookie': await commitSession(session)
+      }
+    });
+  }
+
+  return redirect('/');
 }
 
 const LoginPage = () => {
