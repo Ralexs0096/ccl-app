@@ -43,7 +43,14 @@ export async function action({ request }: Route.ActionArgs) {
     });
   }
 
-  return redirect('/');
+  session.set('userId', `${user.id}`);
+
+  // Login succeeded, send them to the home page.
+  return redirect('/', {
+    headers: {
+      'Set-Cookie': await commitSession(session)
+    }
+  });
 }
 
 const LoginPage = () => {
