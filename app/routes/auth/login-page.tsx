@@ -4,7 +4,7 @@ import { Button } from '~/components/ui/button';
 import { Input } from '~/components/ui/input';
 import { cn } from '~/lib/utils';
 import { commitSession, getSession } from '~/sessions.server';
-import { validateCredentials } from '~/utils/auth.server';
+import { validateCredentials } from '~/lib/auth.server';
 import type { Route } from './+types/login-page';
 
 export async function loader({ request }: Route.LoaderArgs) {
