@@ -8,11 +8,11 @@ datasource db {
 }
 
 model User {
-  id         Int      @id @default(autoincrement())
-  email      String   @unique
+  id         Int       @id @default(autoincrement())
+  email      String    @unique
   password   String
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  createdAt  DateTime  @default(now())
+  updatedAt  DateTime  @updatedAt
   firstName  String
   lastName   String
   phone      String
@@ -21,10 +21,11 @@ model User {
   state      String
   zip        String
   country    String
-  role       Role     @default(MENTEE)
-  isActive   Boolean  @default(true)
-  isVerified Boolean  @default(false)
-  isDeleted  Boolean  @default(false)
+  role       Role      @default(MENTEE)
+  isActive   Boolean   @default(true)
+  isVerified Boolean   @default(false)
+  isDeleted  Boolean   @default(false)
+  sessions   Session[]
 
   @@map("User")
 }
@@ -33,4 +34,16 @@ enum Role {
   ADMIN
   MENTOR
   MENTEE
+}
+
+model Session {
+  id        String   @id @default(uuid())
+  userId    Int
+  user      User     @relation(fields: [userId], references: [id])
+  expiredAt DateTime
+  data      Json     @default("{}")
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@map("Session")
 }
