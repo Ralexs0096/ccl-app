@@ -9,12 +9,10 @@ import type { Route } from './+types/login-page';
 
 export async function loader({ request }: Route.LoaderArgs) {
   const session = await getSession(request.headers.get('Cookie'));
-
   if (session.has('userId')) {
     // Redirect to the home page if they are already signed in.
     return redirect('/');
   }
-
   return data(
     { error: session.get('error') },
     {
@@ -27,14 +25,17 @@ export async function loader({ request }: Route.LoaderArgs) {
 
 export async function action({ request }: Route.ActionArgs) {
   const session = await getSession(request.headers.get('Cookie'));
+  console.log({ session });
   const form = await request.formData();
 
+  console.log({ form });
   const user = await validateCredentials({
     email: form.get('email') as string,
     password: form.get('password') as string
   });
 
   if (!user) {
+    console.log('HERE');
     session.flash('error', 'Invalid username/password');
     return redirect('/auth/login', {
       headers: {
@@ -43,7 +44,9 @@ export async function action({ request }: Route.ActionArgs) {
     });
   }
 
-  session.set('userId', `${user.id}`);
+  console.log({ user });
+
+  session.set('userId', user.id);
 
   // Login succeeded, send them to the home page.
   return redirect('/', {
